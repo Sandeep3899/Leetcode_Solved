@@ -1,10 +1,16 @@
 class Solution:
     def isHappy(self, n: int) -> bool:
-        def get_next(num):
-            return sum(int(digit) ** 2 for digit in str(num))
-        
-        seen = set()
-        while n != 1 and n not in seen:
-            seen.add(n)
-            n = get_next(n)
-        return n == 1
+        def nextNum(number: int) -> int:
+            total_sum = 0
+            while number > 0:
+                digit = number % 10
+                total_sum += digit * digit
+                number //= 10
+            return total_sum
+        slow = n
+        fast = nextNum(n)
+
+        while fast != 1 and slow != fast:
+            slow = nextNum(slow)
+            fast = nextNum(nextNum(fast))
+        return fast == 1
