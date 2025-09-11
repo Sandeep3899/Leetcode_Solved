@@ -2,13 +2,14 @@ from typing import List
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        min_price = float('inf')  # Track the lowest price encountered
-        max_profit = 0  # Maximum profit initialized to 0
-
-        for price in prices:
-            if price < min_price:
-                min_price = price  # Update lowest price
-            profit = price - min_price  # Profit if selling today
-            max_profit = max(max_profit, profit)  # Update max profit
-        
-        return max_profit  # Return the best profit found
+        maxP = 0
+        l = 0
+        r = 1
+        while r < len(prices):
+            if prices[l] < prices[r]:
+                profit = prices[r] - prices[l]
+                maxP = max(maxP, profit)            
+            else:
+                l = r
+            r += 1
+        return maxP
